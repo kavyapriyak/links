@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AI with Kavya — Links</title>
+<meta name="description" content="AI with Kavya — a calmer way to learn AI. YouTube, Instagram, and more.">
+<meta name="theme-color" content="#F4EEE3">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600&family=DM+Sans:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F4EEE3;
+    --ink: #2E2A24;
+    --orange: #C8672A;
+    --orange-dark: #A9541F;
+    --gold: #C9A227;
+    --muted: #8A8172;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "DM Sans", system-ui, sans-serif;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3.5rem 1.5rem 2rem;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  main {
+    width: 100%;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    flex: 1;
+  }
+
+  .sparkle {
+    width: 22px;
+    height: 22px;
+    color: var(--gold);
+    margin-bottom: 0.9rem;
+  }
+
+  h1 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600;
+    font-size: 2.4rem;
+    line-height: 1.1;
+    letter-spacing: 0.01em;
+    text-align: center;
+  }
+
+  .tagline {
+    margin-top: 0.55rem;
+    font-size: 0.95rem;
+    color: var(--muted);
+    letter-spacing: 0.02em;
+    text-align: center;
+  }
+
+  nav {
+    width: 100%;
+    margin-top: 2.75rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.9rem;
+  }
+
+  .link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 56px;
+    padding: 0.9rem 1.25rem;
+    border: 1.5px solid var(--orange);
+    border-radius: 999px;
+    color: var(--orange);
+    background: transparent;
+    font-size: 1rem;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    text-decoration: none;
+    text-align: center;
+    transition: background-color 0.18s ease, color 0.18s ease, transform 0.08s ease;
+  }
+
+  .link:hover { background: var(--orange); color: var(--cream); }
+  .link:active { background: var(--orange-dark); border-color: var(--orange-dark); color: var(--cream); transform: scale(0.98); }
+  .link:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; }
+
+  footer {
+    margin-top: 3rem;
+    font-size: 0.75rem;
+    color: var(--muted);
+    letter-spacing: 0.06em;
+  }
+</style>
+</head>
+<body>
+<main>
+  <svg class="sparkle" viewBox="0 0 24 24" fill="currentColor" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <path d="M12 0c.6 6.5 5.5 11.4 12 12-6.5.6-11.4 5.5-12 12-.6-6.5-5.5-11.4-12-12C6.5 11.4 11.4 6.5 12 0z"/>
+  </svg>
+  <h1>AI with Kavya</h1>
+  <p class="tagline">A calmer way to learn AI</p>
+  <nav aria-label="Links">
+    <a class="link" href="https://youtube.com/@AI_with_Kavya" target="_blank" rel="noopener">YouTube channel</a>
+    <a class="link" href="https://www.instagram.com/aiwithkavya__/" target="_blank" rel="noopener">Instagram</a>
+    <a class="link" href="https://kavyapriyak.github.io/pixel-garden/" target="_blank" rel="noopener">Pixel Garden</a>
+    <a class="link" href="guides.html">Free Guides</a>
+  </nav>
+</main>
+<footer>Built with Claude</footer>
+</body>
+</html>
