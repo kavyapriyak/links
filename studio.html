@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI with Kavya — Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500&family=DM+Sans:ital,wght@0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+:root{
+  --linen:#F6F2EB;
+  --espresso:#4B342E;
+  --gold:#C4A46B;
+  --chestnut:#8B5E3C;
+  --charcoal:#25211F;
+  --border:#DDD2C5;
+  --card:#FDFBF7;
+  --muted:#8A7E70;
+  --shadow:0 2px 10px rgba(75,52,46,.06), 0 1px 3px rgba(75,52,46,.05);
+  --radius:18px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--linen);
+  color:var(--charcoal);
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;
+  line-height:1.6;
+  min-height:100vh;
+  padding-bottom:80px;
+}
+h1,h2,h3,.serif{font-family:'Cormorant Garamond',serif;font-weight:600;color:var(--espresso)}
+
+/* ---------- header ---------- */
+header{
+  max-width:760px;margin:0 auto;
+  padding:44px 22px 10px;
+  text-align:center;
+}
+header .eyebrow{
+  font-size:11px;letter-spacing:.22em;text-transform:uppercase;
+  color:var(--chestnut);font-weight:500;
+}
+header h1{font-size:34px;line-height:1.15;margin-top:6px}
+header h1 em{font-style:italic;color:var(--gold);font-weight:500}
+header .rule{
+  width:56px;height:1px;background:var(--gold);
+  margin:16px auto 0;opacity:.7;
+}
+header .today{font-size:12.5px;color:var(--muted);margin-top:10px;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:15px}
+
+/* ---------- tabs ---------- */
+nav{
+  max-width:760px;margin:26px auto 0;padding:0 22px;
+  display:flex;gap:8px;justify-content:center;
+}
+nav button{
+  appearance:none;border:1px solid transparent;background:transparent;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;
+  letter-spacing:.08em;text-transform:uppercase;
+  color:var(--muted);padding:9px 18px;border-radius:999px;
+  cursor:pointer;transition:all .25s ease;
+}
+nav button:hover{color:var(--espresso)}
+nav button.active{
+  background:var(--espresso);color:var(--linen);
+  box-shadow:var(--shadow);
+}
+
+/* ---------- layout ---------- */
+main{max-width:760px;margin:0 auto;padding:28px 22px 0}
+section.tab{display:none;animation:fade .35s ease}
+section.tab.visible{display:block}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+.section-head{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin-bottom:6px}
+.section-head h2{font-size:26px}
+.section-note{font-size:13px;color:var(--muted);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:16px;margin-bottom:20px}
+
+/* ---------- cards ---------- */
+.card{
+  background:var(--card);border:1px solid var(--border);
+  border-radius:var(--radius);box-shadow:var(--shadow);
+  padding:20px 22px;margin-bottom:14px;
+  transition:box-shadow .25s ease;
+}
+.card:hover{box-shadow:0 4px 18px rgba(75,52,46,.09)}
+
+/* ---------- pipeline ---------- */
+.filters{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px}
+.filters button{
+  appearance:none;border:1px solid var(--border);background:var(--card);
+  font-family:'DM Sans',sans-serif;font-size:12px;color:var(--muted);
+  padding:5px 13px;border-radius:999px;cursor:pointer;transition:all .2s ease;
+}
+.filters button.active{border-color:var(--chestnut);color:var(--chestnut);background:#F3EADF}
+
+.group-label{
+  font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;
+  color:var(--espresso);margin:26px 0 12px;display:flex;align-items:center;gap:12px;
+}
+.group-label::after{content:"";flex:1;height:1px;background:var(--border)}
+.group-label .count{
+  font-family:'DM Sans',sans-serif;font-size:11px;color:var(--muted);
+  font-weight:400;letter-spacing:.05em;
+}
+
+.video-card{display:flex;flex-direction:column;gap:10px}
+.video-title{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--espresso);line-height:1.3}
+.video-meta{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.pill{
+  font-size:11px;letter-spacing:.06em;padding:3px 11px;border-radius:999px;
+  border:1px solid var(--border);color:var(--muted);background:var(--linen);
+}
+.pill.pillar-Chat{background:#F3EADF;border-color:var(--gold);color:var(--chestnut)}
+.pill.pillar-Cowork{background:#EFE7DB;border-color:#B8A588;color:#75603F}
+.pill.pillar-Code{background:#EDE5DC;border-color:var(--chestnut);color:var(--chestnut)}
+.pill.pillar-Design{background:#F5EDE0;border-color:#CBAE79;color:#8C6F3E}
+.pill.status-Published{background:var(--espresso);color:var(--linen);border-color:var(--espresso)}
+.pill.status-InProduction{background:var(--gold);color:#fff;border-color:var(--gold)}
+.pill.status-Idea{background:transparent;color:var(--muted);border-style:dashed}
+
+.card-actions{display:flex;gap:10px;margin-top:2px}
+.link-btn{
+  appearance:none;background:none;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:12px;color:var(--chestnut);
+  padding:2px 0;border-bottom:1px solid transparent;transition:border-color .2s;
+}
+.link-btn:hover{border-bottom-color:var(--chestnut)}
+.link-btn.quiet{color:var(--muted)}
+
+/* ---------- forms ---------- */
+.add-form{margin-bottom:8px}
+.add-form.collapsed .form-body{display:none}
+.form-body{margin-top:16px;display:flex;flex-direction:column;gap:14px}
+label.field{display:flex;flex-direction:column;gap:6px;font-size:12px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+input[type=text],textarea,select{
+  font-family:'DM Sans',sans-serif;font-size:15px;color:var(--charcoal);
+  background:var(--linen);border:1px solid var(--border);border-radius:12px;
+  padding:11px 14px;outline:none;transition:border-color .2s;width:100%;
+}
+input[type=text]:focus,textarea:focus,select:focus{border-color:var(--gold)}
+textarea{resize:vertical;min-height:90px}
+.field-row{display:flex;gap:12px;flex-wrap:wrap}
+.field-row label.field{flex:1;min-width:140px}
+select{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238B5E3C' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;cursor:pointer}
+
+.btn{
+  appearance:none;border:none;cursor:pointer;
+  font-family:'DM Sans',sans-serif;font-size:13px;font-weight:500;letter-spacing:.06em;
+  background:var(--espresso);color:var(--linen);
+  padding:11px 26px;border-radius:999px;transition:background .25s;
+  align-self:flex-start;
+}
+.btn:hover{background:#5D423A}
+.btn.ghost{background:transparent;border:1px solid var(--border);color:var(--chestnut)}
+.btn.ghost:hover{border-color:var(--chestnut);background:#F3EADF}
+
+.toggle-add{
+  display:flex;align-items:center;justify-content:space-between;gap:10px;
+  cursor:pointer;user-select:none;
+}
+.toggle-add h3{font-size:19px}
+.toggle-add .plus{
+  font-family:'Cormorant Garamond',serif;font-size:24px;color:var(--gold);
+  transition:transform .25s ease;line-height:1;
+}
+.add-form:not(.collapsed) .plus{transform:rotate(45deg)}
+
+/* ---------- scorer ---------- */
+.slider-row{display:flex;flex-direction:column;gap:4px;margin-bottom:14px}
+.slider-row .slider-top{display:flex;justify-content:space-between;align-items:baseline}
+.slider-row .slider-name{font-size:13px;color:var(--charcoal);font-weight:500}
+.slider-row .slider-val{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;color:var(--chestnut);min-width:26px;text-align:right}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:4px;border-radius:99px;
+  background:linear-gradient(to right,var(--gold) 0%,var(--gold) var(--fill,50%),var(--border) var(--fill,50%),var(--border) 100%);
+  outline:none;cursor:pointer;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;appearance:none;width:22px;height:22px;border-radius:50%;
+  background:var(--card);border:2px solid var(--chestnut);
+  box-shadow:var(--shadow);cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{
+  width:20px;height:20px;border-radius:50%;
+  background:var(--card);border:2px solid var(--chestnut);
+  box-shadow:var(--shadow);cursor:pointer;
+}
+.score-summary{
+  display:flex;align-items:center;gap:18px;flex-wrap:wrap;
+  border-top:1px dashed var(--border);padding-top:16px;margin-top:6px;
+}
+.score-total{font-family:'Cormorant Garamond',serif;font-size:40px;font-weight:700;color:var(--espresso);line-height:1}
+.score-total small{font-size:17px;color:var(--muted);font-weight:500}
+.score-weakest{font-size:13px;color:var(--muted)}
+.score-weakest b{color:var(--chestnut);font-weight:500}
+.calm-note{
+  width:100%;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:16px;
+  color:var(--chestnut);background:#F3EADF;border:1px solid var(--gold);
+  border-radius:12px;padding:10px 16px;
+}
+.saved-idea{display:flex;align-items:center;gap:16px}
+.saved-idea .rank{
+  font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--gold);
+  min-width:28px;text-align:center;
+}
+.saved-idea .body{flex:1}
+.saved-idea .body .t{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--espresso);line-height:1.3}
+.saved-idea .body .d{font-size:12px;color:var(--muted);margin-top:2px}
+.saved-idea .score{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:700;color:var(--espresso)}
+.saved-idea .score small{font-size:13px;color:var(--muted);font-weight:400}
+
+/* ---------- week ---------- */
+.week-banner{font-size:13px;color:var(--muted);margin-bottom:18px;font-style:italic;font-family:'Cormorant Garamond',serif;font-size:16px}
+.check-item{
+  display:flex;align-items:center;gap:14px;cursor:pointer;user-select:none;
+  padding:16px 20px;
+}
+.check-item + .check-item{border-top:1px dashed var(--border)}
+.checkbox{
+  width:24px;height:24px;border-radius:8px;flex-shrink:0;
+  border:1.5px solid var(--chestnut);background:var(--linen);
+  display:flex;align-items:center;justify-content:center;
+  transition:all .2s ease;
+}
+.checkbox svg{opacity:0;transform:scale(.5);transition:all .2s ease}
+.check-item.done .checkbox{background:var(--espresso);border-color:var(--espresso)}
+.check-item.done .checkbox svg{opacity:1;transform:scale(1)}
+.check-item .t{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:600;color:var(--espresso);transition:color .2s}
+.check-item .d{font-size:12px;color:var(--muted)}
+.check-item.done .t{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--gold);text-decoration-thickness:1px}
+.week-progress{
+  height:4px;border-radius:99px;background:var(--border);overflow:hidden;margin:4px 0 18px;
+}
+.week-progress i{display:block;height:100%;background:var(--gold);border-radius:99px;transition:width .4s ease}
+
+/* ---------- footer / backup ---------- */
+footer{
+  max-width:760px;margin:44px auto 0;padding:22px;
+  border-top:1px solid var(--border);
+  display:flex;justify-content:center;gap:10px;flex-wrap:wrap;
+}
+footer .btn{font-size:12px;padding:9px 20px}
+
+/* ---------- toast ---------- */
+#toast{
+  position:fixed;left:50%;bottom:26px;transform:translateX(-50%) translateY(20px);
+  background:var(--espresso);color:var(--linen);
+  font-size:13px;padding:10px 22px;border-radius:999px;box-shadow:var(--shadow);
+  opacity:0;pointer-events:none;transition:all .3s ease;z-index:50;
+}
+#toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ---------- edit dialog ---------- */
+dialog{
+  border:1px solid var(--border);border-radius:var(--radius);
+  background:var(--card);color:var(--charcoal);
+  padding:26px;width:min(92vw,440px);box-shadow:0 12px 40px rgba(37,33,31,.18);
+}
+dialog::backdrop{background:rgba(37,33,31,.35);backdrop-filter:blur(2px)}
+dialog h3{font-size:22px;margin-bottom:16px}
+dialog .form-body{margin-top:0}
+dialog .dialog-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+
+@media(min-width:640px){
+  header h1{font-size:42px}
+  .video-card{flex-direction:row;align-items:center;justify-content:space-between}
+  .video-card .left{display:flex;flex-direction:column;gap:8px}
+  .card-actions{margin-top:0}
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="eyebrow">AI with Kavya · Studio</div>
+  <h1>Content <em>Command Centre</em></h1>
+  <div class="rule"></div>
+  <div class="today" id="todayLine"></div>
+</header>
+
+<nav>
+  <button data-tab="pipeline" class="active">Pipeline</button>
+  <button data-tab="scorer">Idea Scorer</button>
+  <button data-tab="week">Week</button>
+</nav>
+
+<main>
+
+<!-- ================= PIPELINE ================= -->
+<section class="tab visible" id="tab-pipeline">
+  <div class="section-head"><h2>Pipeline</h2></div>
+  <p class="section-note">Every video, from spark to screen.</p>
+
+  <div class="card add-form collapsed" id="addForm">
+    <div class="toggle-add" onclick="toggleAdd()">
+      <h3>Add a video</h3><span class="plus">+</span>
+    </div>
+    <div class="form-body">
+      <label class="field">Title
+        <input type="text" id="newTitle" placeholder="A title worth clicking…">
+      </label>
+      <div class="field-row">
+        <label class="field">Pillar
+          <select id="newPillar">
+            <option>Chat</option><option>Cowork</option><option>Code</option><option>Design</option>
+          </select>
+        </label>
+        <label class="field">Status
+          <select id="newStatus">
+            <option>Idea</option><option>In Production</option><option>Published</option>
+          </select>
+        </label>
+      </div>
+      <button class="btn" onclick="addVideo()">Add to pipeline</button>
+    </div>
+  </div>
+
+  <div class="filters" id="pillarFilters">
+    <button data-pillar="All" class="active">All</button>
+    <button data-pillar="Chat">Chat</button>
+    <button data-pillar="Cowork">Cowork</button>
+    <button data-pillar="Code">Code</button>
+    <button data-pillar="Design">Design</button>
+  </div>
+
+  <div id="pipelineList"></div>
+</section>
+
+<!-- ================= SCORER ================= -->
+<section class="tab" id="tab-scorer">
+  <div class="section-head"><h2>Idea Scorer</h2></div>
+  <p class="section-note">Score honestly. The weakest number tells the truth.</p>
+
+  <div class="card">
+    <label class="field" style="margin-bottom:18px">Idea title
+      <input type="text" id="ideaTitle" placeholder="What's the idea?">
+    </label>
+    <div id="sliders"></div>
+    <div class="score-summary">
+      <div class="score-total"><span id="scoreTotal">25</span><small> / 50</small></div>
+      <div class="score-weakest" id="weakestLine"></div>
+      <div class="calm-note" id="calmNote" hidden>Improve this before proceeding.</div>
+      <button class="btn" style="margin-left:auto" onclick="saveIdea()">Save idea</button>
+    </div>
+  </div>
+
+  <div class="group-label">Saved ideas <span class="count" id="ideaCount"></span></div>
+  <div id="ideaList"></div>
+</section>
+
+<!-- ================= WEEK ================= -->
+<section class="tab" id="tab-week">
+  <div class="section-head"><h2>This Week</h2></div>
+  <p class="week-banner" id="weekBanner"></p>
+  <div class="week-progress"><i id="weekBar" style="width:0%"></i></div>
+
+  <div class="card" style="padding:4px 0" id="weekList"></div>
+
+  <div class="group-label">Notes</div>
+  <div class="card">
+    <textarea id="weekNotes" placeholder="Thoughts, hooks, things to remember…"></textarea>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <button class="btn ghost" onclick="exportData()">Export JSON</button>
+  <button class="btn ghost" onclick="document.getElementById('importFile').click()">Import JSON</button>
+  <input type="file" id="importFile" accept=".json,application/json" hidden onchange="importData(event)">
+</footer>
+
+<div id="toast"></div>
+
+<!-- edit dialog -->
+<dialog id="editDialog">
+  <h3>Edit video</h3>
+  <div class="form-body">
+    <label class="field">Title
+      <input type="text" id="editTitle">
+    </label>
+    <div class="field-row">
+      <label class="field">Pillar
+        <select id="editPillar">
+          <option>Chat</option><option>Cowork</option><option>Code</option><option>Design</option>
+        </select>
+      </label>
+      <label class="field">Status
+        <select id="editStatus">
+          <option>Idea</option><option>In Production</option><option>Published</option>
+        </select>
+      </label>
+    </div>
+    <div class="dialog-actions">
+      <button class="btn ghost" onclick="closeEdit()">Cancel</button>
+      <button class="btn" onclick="saveEdit()">Save</button>
+    </div>
+  </div>
+</dialog>
+
+<script>
+/* =============== storage =============== */
+const KEY = 'aiwithkavya_studio_v1';
+
+const seed = () => ({
+  videos: [
+    ...[
+      ["3 Claude Prompts Every Professional Needs","Chat"],
+      ["Claude Design: Build a YouTube Brand Without a Designer","Design"],
+      ["Stop Rewriting Prompts — Use Claude Artifacts Instead","Chat"],
+      ["Opus, Sonnet, Haiku — Which Claude Should You Actually Use?","Chat"],
+      ["I Automated My Gmail From My Phone","Cowork"],
+      ["Claude Code 101","Code"],
+    ].map(([title,pillar],i)=>({id:'v'+(i+1),title,pillar,status:'Published'})),
+    ...[
+      ["Skills in Claude","Chat"],
+      ["Claude Universe Pillar Picker","Code"],
+      ["Desktop App: Package & Ship","Code"],
+      ["I Built My Own Link-in-Bio","Code"],
+      ["Pixel Garden","Chat"],
+    ].map(([title,pillar],i)=>({id:'v'+(i+7),title,pillar,status:'Idea'})),
+  ],
+  ideas: [],
+  week: { key:'', checks:[false,false,false,false], },
+  notes: '',
+});
+
+let state;
+try {
+  state = JSON.parse(localStorage.getItem(KEY)) || seed();
+} catch(e){ state = seed(); }
+
+function save(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+
+/* =============== helpers =============== */
+const $ = s => document.querySelector(s);
+const esc = s => String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const uid = () => 'v' + Date.now().toString(36) + Math.random().toString(36).slice(2,6);
+
+function toast(msg){
+  const t = $('#toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._h);
+  t._h = setTimeout(()=>t.classList.remove('show'), 2200);
+}
+
+/* =============== header date =============== */
+const now = new Date();
+$('#todayLine').textContent = now.toLocaleDateString('en-US',{weekday:'long', month:'long', day:'numeric', year:'numeric'});
+
+/* =============== tabs =============== */
+document.querySelectorAll('nav button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    document.querySelectorAll('nav button').forEach(b=>b.classList.toggle('active', b===btn));
+    document.querySelectorAll('section.tab').forEach(s=>s.classList.remove('visible'));
+    $('#tab-'+btn.dataset.tab).classList.add('visible');
+  });
+});
+
+/* =============== PIPELINE =============== */
+let pillarFilter = 'All';
+const STATUSES = ['In Production','Idea','Published']; // display order
+
+document.querySelectorAll('#pillarFilters button').forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    pillarFilter = btn.dataset.pillar;
+    document.querySelectorAll('#pillarFilters button').forEach(b=>b.classList.toggle('active', b===btn));
+    renderPipeline();
+  });
+});
+
+function toggleAdd(){ $('#addForm').classList.toggle('collapsed'); }
+
+function addVideo(){
+  const title = $('#newTitle').value.trim();
+  if(!title){ toast('Give it a title first'); return; }
+  state.videos.unshift({ id:uid(), title, pillar:$('#newPillar').value, status:$('#newStatus').value });
+  $('#newTitle').value = '';
+  $('#addForm').classList.add('collapsed');
+  save(); renderPipeline();
+  toast('Added to pipeline');
+}
+
+function nextStatus(s){
+  return s==='Idea' ? 'In Production' : s==='In Production' ? 'Published' : 'Idea';
+}
+function advanceVideo(id){
+  const v = state.videos.find(v=>v.id===id);
+  if(!v) return;
+  v.status = nextStatus(v.status);
+  save(); renderPipeline();
+  toast('Moved to ' + v.status);
+}
+function deleteVideo(id){
+  const v = state.videos.find(v=>v.id===id);
+  if(!v) return;
+  if(!confirm('Remove “' + v.title + '” from the pipeline?')) return;
+  state.videos = state.videos.filter(v=>v.id!==id);
+  save(); renderPipeline();
+  toast('Removed');
+}
+
+let editingId = null;
+function openEdit(id){
+  const v = state.videos.find(v=>v.id===id);
+  if(!v) return;
+  editingId = id;
+  $('#editTitle').value = v.title;
+  $('#editPillar').value = v.pillar;
+  $('#editStatus').value = v.status;
+  $('#editDialog').showModal();
+}
+function closeEdit(){ $('#editDialog').close(); editingId = null; }
+function saveEdit(){
+  const v = state.videos.find(v=>v.id===editingId);
+  if(v){
+    const t = $('#editTitle').value.trim();
+    if(!t){ toast('Title can’t be empty'); return; }
+    v.title = t;
+    v.pillar = $('#editPillar').value;
+    v.status = $('#editStatus').value;
+    save(); renderPipeline();
+    toast('Saved');
+  }
+  closeEdit();
+}
+
+function renderPipeline(){
+  const wrap = $('#pipelineList');
+  wrap.innerHTML = '';
+  STATUSES.forEach(status=>{
+    const items = state.videos.filter(v=>v.status===status && (pillarFilter==='All' || v.pillar===pillarFilter));
+    if(!items.length) return;
+    const label = document.createElement('div');
+    label.className = 'group-label';
+    label.innerHTML = esc(status) + ' <span class="count">' + items.length + (items.length===1?' video':' videos') + '</span>';
+    wrap.appendChild(label);
+    items.forEach(v=>{
+      const card = document.createElement('div');
+      card.className = 'card video-card';
+      card.innerHTML =
+        '<div class="left">'+
+          '<div class="video-title">'+esc(v.title)+'</div>'+
+          '<div class="video-meta">'+
+            '<span class="pill pillar-'+esc(v.pillar)+'">'+esc(v.pillar)+'</span>'+
+            '<span class="pill status-'+esc(v.status).replace(/\s/g,'')+'">'+esc(v.status)+'</span>'+
+          '</div>'+
+        '</div>'+
+        '<div class="card-actions">'+
+          '<button class="link-btn" onclick="advanceVideo(\''+v.id+'\')">'+
+            (v.status==='Published' ? 'Back to idea' : 'Move to '+esc(nextStatus(v.status)))+'</button>'+
+          '<button class="link-btn quiet" onclick="openEdit(\''+v.id+'\')">Edit</button>'+
+          '<button class="link-btn quiet" onclick="deleteVideo(\''+v.id+'\')">Remove</button>'+
+        '</div>';
+      wrap.appendChild(card);
+    });
+  });
+  if(!wrap.children.length){
+    wrap.innerHTML = '<p class="section-note">Nothing here yet — add your first video above.</p>';
+  }
+}
+
+/* =============== SCORER =============== */
+const CRITERIA = ['Searchability','Shareability','Practical Value','Novelty','Subscriber Potential'];
+
+const slidersWrap = $('#sliders');
+CRITERIA.forEach((name,i)=>{
+  const row = document.createElement('div');
+  row.className = 'slider-row';
+  row.innerHTML =
+    '<div class="slider-top"><span class="slider-name">'+name+'</span>'+
+    '<span class="slider-val" id="sv'+i+'">5</span></div>'+
+    '<input type="range" min="1" max="10" value="5" id="sl'+i+'">';
+  slidersWrap.appendChild(row);
+});
+document.querySelectorAll('#sliders input[type=range]').forEach(sl=>{
+  sl.addEventListener('input', updateScore);
+});
+
+function sliderVals(){
+  return CRITERIA.map((_,i)=>+$('#sl'+i).value);
+}
+function updateScore(){
+  const vals = sliderVals();
+  vals.forEach((v,i)=>{
+    $('#sv'+i).textContent = v;
+    const sl = $('#sl'+i);
+    sl.style.setProperty('--fill', ((v-1)/9*100)+'%');
+  });
+  const total = vals.reduce((a,b)=>a+b,0);
+  $('#scoreTotal').textContent = total;
+  const min = Math.min(...vals);
+  const weakest = CRITERIA[vals.indexOf(min)];
+  $('#weakestLine').innerHTML = 'Weakest: <b>'+weakest+' ('+min+')</b>';
+  $('#calmNote').hidden = min >= 8;
+}
+updateScore();
+
+function saveIdea(){
+  const title = $('#ideaTitle').value.trim();
+  if(!title){ toast('Name the idea first'); return; }
+  const vals = sliderVals();
+  state.ideas.push({
+    id: uid(), title,
+    scores: Object.fromEntries(CRITERIA.map((c,i)=>[c,vals[i]])),
+    total: vals.reduce((a,b)=>a+b,0),
+    date: new Date().toISOString().slice(0,10),
+  });
+  $('#ideaTitle').value = '';
+  save(); renderIdeas();
+  toast('Idea saved');
+}
+
+function deleteIdea(id){
+  state.ideas = state.ideas.filter(i=>i.id!==id);
+  save(); renderIdeas();
+  toast('Removed');
+}
+
+function sendToPipeline(id){
+  const idea = state.ideas.find(i=>i.id===id);
+  if(!idea) return;
+  state.videos.unshift({ id:uid(), title:idea.title, pillar:'Chat', status:'Idea' });
+  save(); renderPipeline();
+  toast('Sent to pipeline as an Idea');
+}
+
+function renderIdeas(){
+  const wrap = $('#ideaList');
+  const list = [...state.ideas].sort((a,b)=>b.total-a.total);
+  $('#ideaCount').textContent = list.length ? list.length + (list.length===1?' idea':' ideas') : '';
+  wrap.innerHTML = '';
+  if(!list.length){
+    wrap.innerHTML = '<p class="section-note">No scored ideas yet. Score one above — be honest.</p>';
+    return;
+  }
+  list.forEach((idea,rank)=>{
+    const entries = Object.entries(idea.scores);
+    const min = Math.min(...entries.map(([,v])=>v));
+    const weakest = entries.find(([,v])=>v===min);
+    const card = document.createElement('div');
+    card.className = 'card saved-idea';
+    card.innerHTML =
+      '<div class="rank">'+(rank+1)+'</div>'+
+      '<div class="body">'+
+        '<div class="t">'+esc(idea.title)+'</div>'+
+        '<div class="d">Weakest: '+esc(weakest[0])+' ('+weakest[1]+')'+(min<8?' · improve before proceeding':'')+' · '+esc(idea.date)+'</div>'+
+        '<div class="card-actions" style="margin-top:6px">'+
+          '<button class="link-btn" onclick="sendToPipeline(\''+idea.id+'\')">Send to pipeline</button>'+
+          '<button class="link-btn quiet" onclick="deleteIdea(\''+idea.id+'\')">Remove</button>'+
+        '</div>'+
+      '</div>'+
+      '<div class="score">'+idea.total+'<small> / 50</small></div>';
+    wrap.appendChild(card);
+  });
+}
+
+/* =============== WEEK =============== */
+const WEEK_TASKS = [
+  { t:'Carousel', d:'Sunday' },
+  { t:'Carousel', d:'Wednesday' },
+  { t:'Reel', d:'Friday' },
+  { t:'Stories', d:'3–4 across the week' },
+];
+
+function mondayKey(){
+  const d = new Date();
+  const day = (d.getDay()+6)%7; // 0 = Monday
+  d.setDate(d.getDate()-day);
+  return d.toISOString().slice(0,10);
+}
+
+function ensureWeek(){
+  const key = mondayKey();
+  if(state.week.key !== key){
+    state.week = { key, checks:[false,false,false,false] };
+    save();
+  }
+}
+
+function toggleCheck(i){
+  state.week.checks[i] = !state.week.checks[i];
+  save(); renderWeek();
+}
+
+function renderWeek(){
+  ensureWeek();
+  const mon = new Date(state.week.key+'T00:00:00');
+  const sun = new Date(mon); sun.setDate(sun.getDate()+6);
+  const fmt = d => d.toLocaleDateString('en-US',{month:'long',day:'numeric'});
+  $('#weekBanner').textContent = 'Week of '+fmt(mon)+' – '+fmt(sun)+'. A fresh page every Monday.';
+
+  const done = state.week.checks.filter(Boolean).length;
+  $('#weekBar').style.width = (done/WEEK_TASKS.length*100)+'%';
+
+  const wrap = $('#weekList');
+  wrap.innerHTML = '';
+  WEEK_TASKS.forEach((task,i)=>{
+    const row = document.createElement('div');
+    row.className = 'check-item' + (state.week.checks[i]?' done':'');
+    row.onclick = ()=>toggleCheck(i);
+    row.innerHTML =
+      '<div class="checkbox"><svg width="12" height="10" viewBox="0 0 12 10" fill="none">'+
+      '<path d="M1 5l3.5 3.5L11 1" stroke="#F6F2EB" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></div>'+
+      '<div><div class="t">'+task.t+'</div><div class="d">'+task.d+'</div></div>';
+    wrap.appendChild(row);
+  });
+}
+
+const notesEl = $('#weekNotes');
+notesEl.value = state.notes || '';
+notesEl.addEventListener('input', ()=>{
+  state.notes = notesEl.value;
+  clearTimeout(notesEl._h);
+  notesEl._h = setTimeout(save, 400);
+});
+
+/* =============== EXPORT / IMPORT =============== */
+function exportData(){
+  const blob = new Blob([JSON.stringify(state,null,2)],{type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = 'aiwithkavya-studio-'+new Date().toISOString().slice(0,10)+'.json';
+  a.click();
+  URL.revokeObjectURL(a.href);
+  toast('Exported');
+}
+
+function importData(ev){
+  const file = ev.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = () => {
+    try{
+      const data = JSON.parse(reader.result);
+      if(!data || !Array.isArray(data.videos)) throw new Error('bad shape');
+      state = {
+        videos: data.videos,
+        ideas: Array.isArray(data.ideas) ? data.ideas : [],
+        week: (data.week && Array.isArray(data.week.checks)) ? data.week : { key:'', checks:[false,false,false,false] },
+        notes: typeof data.notes === 'string' ? data.notes : '',
+      };
+      save();
+      notesEl.value = state.notes;
+      renderPipeline(); renderIdeas(); renderWeek();
+      toast('Imported');
+    }catch(e){
+      toast('That file doesn’t look right');
+    }
+  };
+  reader.readAsText(file);
+  ev.target.value = '';
+}
+
+/* =============== init =============== */
+renderPipeline();
+renderIdeas();
+renderWeek();
+</script>
+</body>
+</html>
