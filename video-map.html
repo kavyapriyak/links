@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Claude Universe — Video Map · AI with Kavya</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;0,700;1,500;1,600&family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --cream: #F4EEE3;
+    --ink: #2E2621;
+    --ink-soft: #6B6055;
+    --orange: #C8672A;
+    --orange-deep: #A9531F;
+    --gold: #C6A14A;
+    --gold-deep: #8A6B23;
+    --line: rgba(46, 38, 33, 0.16);
+    --line-soft: rgba(46, 38, 33, 0.09);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: "DM Sans", system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.55;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2 {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-weight: 600;
+    line-height: 1.15;
+  }
+
+  a:focus-visible { outline: 2px solid var(--orange); outline-offset: 3px; border-radius: 4px; }
+
+  .shell {
+    max-width: 74rem;
+    margin: 0 auto;
+    padding: 1.75rem 1.375rem 2.5rem;
+  }
+
+  /* ---------- header ---------- */
+
+  .masthead {
+    display: flex;
+    align-items: center;
+    gap: 0.625rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .mark {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    background: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+  }
+  .mark svg { width: 15px; height: 15px; }
+
+  .wordmark {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.22em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .page-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 1.25rem 2rem;
+    margin-bottom: 2rem;
+  }
+
+  .page-title {
+    font-size: clamp(2.25rem, 6vw, 3rem);
+    margin-bottom: 0.25rem;
+  }
+  .page-title em { font-style: italic; color: var(--orange); }
+
+  .page-sub {
+    font-size: 0.85rem;
+    color: var(--ink-soft);
+    letter-spacing: 0.04em;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.375rem;
+    margin-top: 0.75rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--orange-deep);
+    text-decoration: underline;
+    text-decoration-color: var(--gold);
+    text-underline-offset: 4px;
+    transition: color 0.2s ease;
+  }
+  .back-link:hover { color: var(--orange); }
+
+  /* ---------- legend ---------- */
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem 1.375rem;
+    padding: 0.625rem 1.125rem;
+    background: rgba(255, 255, 255, 0.45);
+    border: 1px solid var(--line-soft);
+    border-radius: 99px;
+  }
+
+  .legend-item {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .dot {
+    width: 11px;
+    height: 11px;
+    border-radius: 50%;
+    flex: none;
+  }
+  .dot--published { background: var(--orange); box-shadow: inset 0 0 0 2.5px rgba(244, 238, 227, 0.85), 0 0 0 1px var(--orange); }
+  .dot--production { background: var(--gold); box-shadow: inset 0 0 0 2.5px rgba(244, 238, 227, 0.85), 0 0 0 1px var(--gold); }
+  .dot--idea { background: transparent; box-shadow: 0 0 0 1px var(--ink-soft); opacity: 0.7; }
+
+  /* ---------- board ---------- */
+
+  .board {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 1.125rem;
+    align-items: start;
+  }
+
+  @media (min-width: 44rem) { .board { grid-template-columns: repeat(2, 1fr); } }
+  @media (min-width: 68rem) { .board { grid-template-columns: repeat(4, 1fr); } }
+
+  .pillar { display: flex; flex-direction: column; gap: 0.875rem; }
+
+  .pillar-head {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.125rem;
+    border-radius: 14px;
+    border: 1px solid var(--tint-border);
+    background: linear-gradient(135deg, var(--tint-bg), rgba(255, 255, 255, 0.25));
+  }
+
+  .pillar-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 10px;
+    background: var(--orange);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex: none;
+    box-shadow: 0 1px 3px rgba(46, 38, 33, 0.18);
+  }
+  .pillar-icon svg { width: 19px; height: 19px; }
+
+  .pillar-name {
+    font-size: 1.5rem;
+    color: var(--tint-deep);
+  }
+
+  .pillar-tagline {
+    font-size: 0.68rem;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-top: 1px;
+  }
+
+  /* ---------- cards ---------- */
+
+  .card {
+    display: block;
+    padding: 1rem 1.125rem;
+    border-radius: 12px;
+    border: 1px solid rgba(200, 103, 42, 0.25);
+    background: linear-gradient(150deg, rgba(200, 103, 42, 0.07), rgba(198, 161, 74, 0.06));
+    text-decoration: none;
+    color: var(--ink);
+  }
+
+  a.card { transition: border-color 0.2s ease, transform 0.15s ease; }
+  a.card:hover { border-color: var(--orange); transform: translateY(-1px); }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.625rem;
+  }
+  .card-top .dot { margin-top: 5px; }
+
+  .card-title {
+    font-size: 0.9375rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+
+  .card-date {
+    font-size: 0.75rem;
+    color: var(--ink-soft);
+    margin-top: 2px;
+  }
+
+  .badge {
+    display: inline-block;
+    margin-top: 0.75rem;
+    padding: 3px 10px;
+    border-radius: 99px;
+    font-size: 0.62rem;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+
+  .card--published .badge { background: rgba(200, 103, 42, 0.14); color: var(--orange-deep); }
+
+  .card--production {
+    border-color: rgba(198, 161, 74, 0.5);
+    background: rgba(255, 255, 255, 0.35);
+  }
+  .card--production .badge { background: rgba(198, 161, 74, 0.2); color: var(--gold-deep); }
+
+  .card--idea {
+    border: 1px dashed var(--line);
+    background: transparent;
+    opacity: 0.7;
+  }
+  .card--idea .badge { background: rgba(46, 38, 33, 0.07); color: var(--ink-soft); }
+
+  /* ---------- footer ---------- */
+
+  .foot {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem 2rem;
+    margin-top: 2rem;
+    padding: 1rem 1.375rem;
+    border: 1px solid var(--line-soft);
+    border-radius: 14px;
+    background: rgba(255, 255, 255, 0.3);
+  }
+
+  .foot-line {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    font-style: italic;
+    font-size: 1.0625rem;
+  }
+  .foot-line strong { color: var(--orange); font-weight: 600; }
+
+  .foot-handle {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="sparkle" viewBox="0 0 24 24">
+      <path d="M12 0c.9 5.1 2.4 8.6 4.7 10.2C18.8 11.6 21.2 12 24 12c-5.1.9-8.6 2.4-10.2 4.7C12.4 18.8 12 21.2 12 24c-.9-5.1-2.4-8.6-4.7-10.2C5.2 12.4 2.8 12 0 12c5.1-.9 8.6-2.4 10.2-4.7C11.6 5.2 12 2.8 12 0Z"/>
+    </symbol>
+    <symbol id="icon-chat" viewBox="0 0 24 24">
+      <path d="M4 4h16a1 1 0 0 1 1 1v11a1 1 0 0 1-1 1H10l-5 4a.6.6 0 0 1-1-.47V5a1 1 0 0 1 1-1Z"/>
+    </symbol>
+    <symbol id="icon-cowork" viewBox="0 0 24 24">
+      <path d="M13.5 1.5 4.5 13h5.25L8.5 22.5 18 10.5h-5.5l1-9Z"/>
+    </symbol>
+    <symbol id="icon-code" viewBox="0 0 24 24">
+      <path d="m8.5 5.5-6 6.5 6 6.5 1.8-1.7L5.7 12l4.6-4.8-1.8-1.7Z"/>
+      <rect x="12" y="16.5" width="9" height="2.4" rx="1.2"/>
+    </symbol>
+    <symbol id="icon-design" viewBox="0 0 24 24">
+      <path d="M12 2a10 10 0 0 0 0 20c1.7 0 2.4-1 1.8-2.3-.5-1.2 0-2.7 1.6-2.7H18a4 4 0 0 0 4-4C22 6.5 17.5 2 12 2Z" fill-rule="evenodd"/>
+      <circle cx="8" cy="9" r="1.5" fill="#F4EEE3"/>
+      <circle cx="13" cy="7.5" r="1.5" fill="#F4EEE3"/>
+      <circle cx="7.5" cy="14" r="1.5" fill="#F4EEE3"/>
+    </symbol>
+  </defs>
+</svg>
+
+<div class="shell">
+
+  <header>
+    <div class="masthead">
+      <span class="mark"><svg fill="#F4EEE3" aria-hidden="true"><use href="#sparkle"/></svg></span>
+      <span class="wordmark">AI with Kavya</span>
+    </div>
+
+    <div class="page-head">
+      <div>
+        <h1 class="page-title">The <em>Claude</em> Universe</h1>
+        <p class="page-sub">4 pillars &middot; one journey &middot; every video has a home</p>
+        <a class="back-link" href="pillar-picker.html">&larr; Not sure where to start? Take the quiz</a>
+      </div>
+      <div class="legend" aria-label="Status legend">
+        <span class="legend-item"><span class="dot dot--published"></span>Published</span>
+        <span class="legend-item"><span class="dot dot--production"></span>In Production</span>
+        <span class="legend-item"><span class="dot dot--idea"></span>Idea</span>
+      </div>
+    </div>
+  </header>
+
+  <main class="board" id="board"></main>
+
+  <footer class="foot">
+    <p class="foot-line"><strong>Claude</strong> is powerful. This channel makes it simple.</p>
+    <p class="foot-handle">AI with Kavya &middot; @aiwithkavya__</p>
+  </footer>
+
+</div>
+
+<script src="video-data.js"></script>
+<script>
+(function () {
+  "use strict";
+
+  var PILLARS = [
+    { key: "chat",   name: "Chat",   tagline: "Prompts · Artifacts · Skills",
+      icon: "icon-chat",   bg: "rgba(124, 139, 111, 0.16)", border: "rgba(124, 139, 111, 0.45)", deep: "#4E5C42" },
+    { key: "cowork", name: "Cowork", tagline: "Automate · Connect · Get More Done",
+      icon: "icon-cowork", bg: "rgba(114, 137, 160, 0.16)", border: "rgba(114, 137, 160, 0.45)", deep: "#3F5165" },
+    { key: "code",   name: "Code",   tagline: "Terminal · CLI · Agentic Coding",
+      icon: "icon-code",   bg: "rgba(176, 118, 108, 0.16)", border: "rgba(176, 118, 108, 0.45)", deep: "#7A4238" },
+    { key: "design", name: "Design", tagline: "Visual · Brand · Creative",
+      icon: "icon-design", bg: "rgba(198, 161, 74, 0.18)",  border: "rgba(198, 161, 74, 0.5)",  deep: "#8A6B23" }
+  ];
+
+  var MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+
+  function formatDate(iso) {
+    var p = iso.split("-");
+    return MONTHS[Number(p[1]) - 1] + " " + Number(p[2]) + ", " + p[0];
+  }
+
+  /* Oldest first; undated placeholders keep their listed order at the end. */
+  function sortVideos(list) {
+    return list.slice().sort(function (a, b) {
+      if (a.date && b.date) return a.date < b.date ? -1 : a.date > b.date ? 1 : 0;
+      if (a.date) return -1;
+      if (b.date) return 1;
+      return 0;
+    });
+  }
+
+  function statusOf(video) {
+    if (video.url) return { cls: "published", dot: "dot--published", label: "Published" };
+    if (video.status === "production") return { cls: "production", dot: "dot--production", label: "In Production" };
+    return { cls: "idea", dot: "dot--idea", label: "Idea" };
+  }
+
+  var board = document.getElementById("board");
+
+  PILLARS.forEach(function (pillar) {
+    var col = document.createElement("section");
+    col.className = "pillar";
+    col.style.setProperty("--tint-bg", pillar.bg);
+    col.style.setProperty("--tint-border", pillar.border);
+    col.style.setProperty("--tint-deep", pillar.deep);
+
+    var head = document.createElement("div");
+    head.className = "pillar-head";
+    head.innerHTML =
+      '<span class="pillar-icon"><svg fill="#F4EEE3" aria-hidden="true"><use href="#' + pillar.icon + '"/></svg></span>' +
+      '<div><h2 class="pillar-name">' + pillar.name + '</h2>' +
+      '<p class="pillar-tagline">' + pillar.tagline + '</p></div>';
+    col.appendChild(head);
+
+    sortVideos(VIDEO_LINKS[pillar.key]).forEach(function (video) {
+      var status = statusOf(video);
+      var card = document.createElement(video.url ? "a" : "div");
+      card.className = "card card--" + status.cls;
+      if (video.url) {
+        card.href = video.url;
+        card.target = "_blank";
+        card.rel = "noopener";
+      }
+
+      var top = document.createElement("div");
+      top.className = "card-top";
+      var dot = document.createElement("span");
+      dot.className = "dot " + status.dot;
+      var text = document.createElement("div");
+      var title = document.createElement("p");
+      title.className = "card-title";
+      title.textContent = video.title;
+      text.appendChild(title);
+      if (video.date) {
+        var date = document.createElement("p");
+        date.className = "card-date";
+        date.textContent = formatDate(video.date);
+        text.appendChild(date);
+      }
+      top.appendChild(dot);
+      top.appendChild(text);
+      card.appendChild(top);
+
+      var badge = document.createElement("span");
+      badge.className = "badge";
+      badge.textContent = status.label;
+      card.appendChild(badge);
+
+      col.appendChild(card);
+    });
+
+    board.appendChild(col);
+  });
+})();
+</script>
+
+</body>
+</html>
