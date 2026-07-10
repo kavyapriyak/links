@@ -350,6 +350,15 @@
 (function () {
   "use strict";
 
+  /* VIDEO_LINKS comes from video-data.js, shared with pillar-picker.html.
+     The two HTML pages and video-data.js must be deployed together. */
+  if (typeof VIDEO_LINKS === "undefined") {
+    document.body.insertAdjacentHTML("afterbegin",
+      '<div style="background:#A9531F;color:#F4EEE3;padding:0.75rem 1.25rem;font-size:0.85rem;text-align:center">' +
+      'video-data.js failed to load &mdash; keep it in the same folder as this page. No videos to show.</div>');
+    window.VIDEO_LINKS = { chat: [], cowork: [], code: [], design: [] };
+  }
+
   var PILLARS = [
     { key: "chat",   name: "Chat",   tagline: "Prompts · Artifacts · Skills",
       icon: "icon-chat",   bg: "rgba(124, 139, 111, 0.16)", border: "rgba(124, 139, 111, 0.45)", deep: "#4E5C42" },
