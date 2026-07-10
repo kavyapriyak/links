@@ -235,6 +235,7 @@
     transition: background 0.2s ease, transform 0.15s ease;
   }
   .btn-primary:hover { background: var(--orange-deep); }
+  .btn-primary[hidden] { display: none; }
   .btn-primary:active { transform: scale(0.98); }
 
   .btn-ghost {
@@ -424,6 +425,7 @@
       <div class="result-actions">
         <a class="btn-primary" id="watchBtn" href="#" target="_blank" rel="noopener">Watch the video</a>
         <button class="btn-ghost" id="againBtn" type="button">&#8634;&nbsp;Take it again</button>
+        <button class="btn-ghost" id="homeBtn" type="button">&larr;&nbsp;Back to start</button>
       </div>
       <div class="video-extras" id="videoExtras" hidden>
         <div class="sort-toggle" role="group" aria-label="Sort videos">
@@ -445,7 +447,14 @@
 (function () {
   "use strict";
 
-  /* VIDEO_LINKS comes from video-data.js, shared with video-map.html. */
+  /* VIDEO_LINKS comes from video-data.js, shared with video-map.html.
+     The two HTML pages and video-data.js must be deployed together. */
+  if (typeof VIDEO_LINKS === "undefined") {
+    document.body.insertAdjacentHTML("afterbegin",
+      '<div style="background:#A9531F;color:#F4EEE3;padding:0.75rem 1.25rem;font-size:0.85rem;text-align:center">' +
+      'video-data.js failed to load &mdash; keep it in the same folder as this page. Video links are disabled.</div>');
+    window.VIDEO_LINKS = { chat: [], cowork: [], code: [], design: [] };
+  }
 
   var PILLARS = {
     chat: {
@@ -637,7 +646,9 @@
 
   function renderVideos() {
     var vids = sortedVideos(state.pillar);
-    document.getElementById("watchBtn").href = vids[0].url;
+    var watchBtn = document.getElementById("watchBtn");
+    watchBtn.hidden = !vids.length;
+    if (vids.length) watchBtn.href = vids[0].url;
 
     var extras = document.getElementById("videoExtras");
     extras.hidden = vids.length < 2;
@@ -697,6 +708,13 @@
 
   document.getElementById("startBtn").addEventListener("click", start);
   document.getElementById("againBtn").addEventListener("click", start);
+
+  document.getElementById("homeBtn").addEventListener("click", function () {
+    state.step = 0;
+    updateProgress();
+    showScreen("intro");
+    window.scrollTo({ top: 0 });
+  });
 
   backBtn.addEventListener("click", function () {
     if (state.step === 2) { state.step = 1; }
