@@ -12,7 +12,8 @@ var VIDEO_LINKS = {
       url: "https://youtu.be/iuIyxeTCBYU", date: "2026-05-27" },
     { title: "Opus, Sonnet, Haiku — Which Claude Should You Actually Use?",
       url: "https://youtu.be/jJn3Q9pUKDc", date: "2026-06-05" },
-    { title: "Skills in Claude", status: "production" }
+    { title: "Claude Skills Explained: Stop Repeating Yourself",
+      url: "https://youtu.be/wY-aH1e-GQE", date: "2026-07-19" }
   ],
   cowork: [
     { title: "I Automated My Gmail From My Phone — Claude Cowork + Dispatch",
